@@ -1,0 +1,13 @@
+#dev 开发环境
+server:
+  port: 8080
+
+
+spring:
+    datasource:
+        name: test
+        url: jdbc:mysql://192.168.0.176:3306/gtd??useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true
+        username: root
+        password: 123456
+        driver-class-name: com.mysql.jdbc.Driver
+
