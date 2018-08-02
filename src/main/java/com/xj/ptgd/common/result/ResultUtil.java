@@ -1,35 +1,17 @@
 package com.xj.ptgd.common.result;
 
- /**
+import com.xj.ptgd.entity.base.XMLHeadDto;
+
+/**
   * ResultUtil
   * @author wkm
   * @since 2018/7/30
   */
 public class ResultUtil {
-
-    public static Result success(Object object) {
+    public static Result success(XMLHeadDto head,Object object) {
         Result result = new Result();
-        result.setCode(ResultEnum.SUCCESS.getCode());
-        result.setMsg(ResultEnum.SUCCESS.getMsg());
-        result.setData(object);
-        return result;
-    }
-
-    public static Result success() {
-        return success(null);
-    }
-    public static Result success(Integer code, String msg ,Object object) {
-        Result result = new Result();
-        result.setCode(code);
-        result.setMsg(msg);
-        result.setData(object);
-        return result;
-    }
-
-    public static Result error(Integer code, String msg) {
-        Result result = new Result();
-        result.setCode(code);
-        result.setMsg(msg);
+        result.setHead(head);
+        result.setBody(object);
         return result;
     }
 }

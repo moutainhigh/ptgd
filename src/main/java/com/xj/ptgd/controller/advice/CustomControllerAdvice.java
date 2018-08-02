@@ -42,12 +42,12 @@ public class CustomControllerAdvice {
          if (ex instanceof CustomException) {
              CustomException customException = (CustomException) ex;
              if(ex instanceof DataNullException){
-                 return ResultUtil.success(customException.getCode(), customException.getMessage(),null);
+                 return ResultUtil.success(null,null);
              }else{
-                 return ResultUtil.error(customException.getCode(), customException.getMessage());
+                 return ResultUtil.success(null,null);
              }
          }else {
-             return ResultUtil.error(-999, "未知错误");
+             return ResultUtil.success(null,null);
          }
      }
 }

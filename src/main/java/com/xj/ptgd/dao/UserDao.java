@@ -1,6 +1,6 @@
 package com.xj.ptgd.dao;
 
-import com.xj.ptgd.entity.User;
+import com.xj.ptgd.entity.body.User;
 
 import java.util.List;
 

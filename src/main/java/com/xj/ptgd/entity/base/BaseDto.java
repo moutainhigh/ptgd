@@ -1,4 +1,4 @@
-package com.xj.ptgd.entity;
+package com.xj.ptgd.entity.base;
 
 import java.io.Serializable;
 

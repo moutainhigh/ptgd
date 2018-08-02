@@ -30,4 +30,24 @@ public class LogUtils {
         return LoggerFactory.getLogger(LogEnum.EXCEPTION.getCategory());
     }
 
+
+
+    /**
+     * 获取Http日志logger
+     *
+     * @return
+     */
+    public static Logger getHttpXMLLogger() {
+        return LoggerFactory.getLogger(LogEnum.HTTPXML.getCategory());
+    }
+
+    /**
+     * 获取MAC日志logger
+     *
+     * @return
+     */
+    public static Logger getMacLogger() {
+        return LoggerFactory.getLogger(LogEnum.MAC.getCategory());
+    }
+
  }

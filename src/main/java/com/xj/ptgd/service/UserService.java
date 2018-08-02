@@ -1,7 +1,7 @@
 package com.xj.ptgd.service;
 
 
-import com.xj.ptgd.entity.User;
+import com.xj.ptgd.entity.body.User;
 
 import java.util.List;
 

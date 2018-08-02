@@ -8,7 +8,8 @@ package com.xj.ptgd.common.logs;
 public enum LogEnum {
 
     INFO("info"),
-
+    HTTPXML("httpXML"),
+    MAC("mac"),
     EXCEPTION("exception"),;
 
 

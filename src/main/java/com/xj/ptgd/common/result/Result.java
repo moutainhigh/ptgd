@@ -1,45 +1,41 @@
 package com.xj.ptgd.common.result;
 
-import javax.xml.bind.annotation.XmlRootElement;
+import com.xj.ptgd.entity.base.BaseDto;
+import com.xj.ptgd.entity.base.XMLHeadDto;
 
- /**
+import javax.xml.bind.annotation.*;
+
+/**
   * Result http请求返回的最外层对象
   * @author wkm
   * @since 2018/7/30
   */
-@XmlRootElement(name="ResultXML")
-public class Result<T> {
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlRootElement(name = "Out")
+@XmlType( propOrder = { "Head", "Body"})
+public class Result<T> extends BaseDto {
+    /* 头部信息 */
+     private XMLHeadDto Head;
 
-    /** 错误码. */
-    private Integer code;
+     /** 具体的内容. */
+    private T Body;
 
-    /** 提示信息. */
-    private String msg;
+     public XMLHeadDto getHead() {
+         return Head;
+     }
 
-    /** 具体的内容. */
-    private T data;
+     public void setHead(XMLHeadDto head) {
+         Head = head;
+     }
 
-    public Integer getCode() {
-        return code;
-    }
+     public T getBody() {
+         return Body;
+     }
 
-    public void setCode(Integer code) {
-        this.code = code;
-    }
-
-    public String getMsg() {
-        return msg;
-    }
-
-    public void setMsg(String msg) {
-        this.msg = msg;
-    }
-
-    public T getData() {
-        return data;
-    }
-
-    public void setData(T data) {
-        this.data = data;
-    }
-}
+     public void setBody(T body) {
+         Body = body;
+     }
+     public String toString(){
+         return "111";
+     }
+ }

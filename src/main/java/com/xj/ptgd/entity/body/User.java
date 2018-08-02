@@ -1,11 +1,16 @@
-package com.xj.ptgd.entity;
+package com.xj.ptgd.entity.body;
 
- /**
+import com.xj.ptgd.entity.base.BaseDto;
+
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+
+/**
   * User 
   * @author wkm
   * @since 2018/7/30
   */
-public class User extends BaseDto{
+public class User extends BaseDto {
     private Integer userId;
     private String userName;
 

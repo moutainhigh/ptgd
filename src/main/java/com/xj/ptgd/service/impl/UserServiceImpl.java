@@ -3,7 +3,7 @@ package com.xj.ptgd.service.impl;
 import com.xj.ptgd.common.exception.DataNullException;
 import com.xj.ptgd.common.result.ResultEnum;
 import com.xj.ptgd.dao.UserDao;
-import com.xj.ptgd.entity.User;
+import com.xj.ptgd.entity.body.User;
 import com.xj.ptgd.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
