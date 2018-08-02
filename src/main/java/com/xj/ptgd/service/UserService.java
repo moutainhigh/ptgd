@@ -11,6 +11,9 @@ import java.util.List;
   * @since 2018/7/30
   */
 public interface UserService {
-    List<User> findUsers();
-    User findUserById(Integer userId);
+    String findUsers();
+    String findUserById(Integer userId);
+
+    /*发送报文请求*/
+    String sendPost();
 }

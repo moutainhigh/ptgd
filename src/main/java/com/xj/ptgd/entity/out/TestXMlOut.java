@@ -1,5 +1,6 @@
-package com.xj.ptgd.entity;
+package com.xj.ptgd.entity.out;
 
+import com.xj.ptgd.entity.base.XMLBaseDto;
 import com.xj.ptgd.entity.base.XMLHeadDto;
 import com.xj.ptgd.entity.body.User;
 
@@ -8,7 +9,7 @@ import javax.xml.bind.annotation.*;
 @XmlRootElement(name = "Out")
 @XmlType(name="Out",propOrder = {"Head","Body"})
 @XmlAccessorType(XmlAccessType.FIELD)
-public class TestXMlOut {
+public class TestXMlOut implements XMLBaseDto<XMLHeadDto,User> {
     private XMLHeadDto Head;
     private User Body;
 

@@ -1,5 +1,6 @@
-package com.xj.ptgd.entity;
+package com.xj.ptgd.entity.in;
 
+import com.xj.ptgd.entity.base.XMLBaseDto;
 import com.xj.ptgd.entity.base.XMLHeadDto;
 import com.xj.ptgd.entity.body.TestBody;
 
@@ -9,7 +10,7 @@ import javax.xml.bind.annotation.*;
 @XmlRootElement(name="In")
 @XmlType(name="In",propOrder = {"Head","Body"})
 @XmlAccessorType(XmlAccessType.FIELD)
-public class TestXMLIn {
+public class TestXMLIn implements XMLBaseDto<XMLHeadDto,TestBody> {
     private XMLHeadDto Head;
     private TestBody Body;
 

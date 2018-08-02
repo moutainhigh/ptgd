@@ -29,104 +29,96 @@ public class JaxbUtil {
      * @param types
      *            所有需要序列化的Root对象的类型. 
      */
-    public JaxbUtil(Class<?>... types) {
-        try {
+    public JaxbUtil(Class<?>... types) throws JAXBException{
             jaxbContext = JAXBContext.newInstance(types);
-        } catch (JAXBException e) {
-            throw new RuntimeException(e);
-        }
     }
 
     /**
      * Java Object->Xml. 
      */
-    public String toXml(Object root, String encoding) {
-        try {
-            StringWriter writer = new StringWriter();
-            createMarshaller(encoding).marshal(root, writer);
-            return writer.toString();
-        } catch (JAXBException e) {
-            throw new RuntimeException(e);
+    public String toXml(Object root, String encoding) throws JAXBException{
+        StringWriter writer = new StringWriter();
+        createMarshaller(encoding).marshal(root, writer);
+        return writer.toString();
+    }
+
+    /**
+     * Java Object->Xml.
+     */
+    public String toXml(Object root, String encoding,String head) throws JAXBException{
+        StringWriter writer = new StringWriter();
+        if(head!=null){
+            writer.append(head+"\n");
         }
+        createMarshallerAddHead(encoding).marshal(root, writer);
+        return writer.toString();
     }
 
     /**
      * Java Object->Xml, 特别支持对Root Element是Collection的情形. 
      */
     @SuppressWarnings("unchecked")
-    public String toXml(Collection root, String rootName, String encoding) {
-        try {
-            CollectionWrapper wrapper = new CollectionWrapper();
-            wrapper.collection = root;
+    public String toXml(Collection root, String rootName, String encoding) throws JAXBException{
+        CollectionWrapper wrapper = new CollectionWrapper();
+        wrapper.collection = root;
 
-            JAXBElement<CollectionWrapper> wrapperElement = new JAXBElement<CollectionWrapper>(
-                    new QName(rootName), CollectionWrapper.class, wrapper);
+        JAXBElement<CollectionWrapper> wrapperElement = new JAXBElement<CollectionWrapper>(
+                new QName(rootName), CollectionWrapper.class, wrapper);
 
-            StringWriter writer = new StringWriter();
-            createMarshaller(encoding).marshal(wrapperElement, writer);
+        StringWriter writer = new StringWriter();
+        createMarshaller(encoding).marshal(wrapperElement, writer);
 
-            return writer.toString();
-        } catch (JAXBException e) {
-            throw new RuntimeException(e);
-        }
+        return writer.toString();
     }
 
     /**
      * Xml->Java Object. 
      */
     @SuppressWarnings("unchecked")
-    public <T> T fromXml(String xml) {
-        try {
-            StringReader reader = new StringReader(xml);
-            return (T) createUnmarshaller().unmarshal(reader);
-        } catch (JAXBException e) {
-            throw new RuntimeException(e);
-        }
+    public <T> T fromXml(String xml) throws JAXBException{
+        StringReader reader = new StringReader(xml);
+        return (T) createUnmarshaller().unmarshal(reader);
     }
 
     /**
      * Xml->Java Object, 支持大小写敏感或不敏感. 
      */
     @SuppressWarnings("unchecked")
-    public <T> T fromXml(String xml, boolean caseSensitive) {
-        try {
-            String fromXml = xml;
-            if (!caseSensitive)
-                fromXml = xml.toLowerCase();
-            StringReader reader = new StringReader(fromXml);
-            return (T) createUnmarshaller().unmarshal(reader);
-        } catch (JAXBException e) {
-            throw new RuntimeException(e);
-        }
+    public <T> T fromXml(String xml, boolean caseSensitive) throws JAXBException{
+        String fromXml = xml;
+        if (!caseSensitive)
+            fromXml = xml.toLowerCase();
+        StringReader reader = new StringReader(fromXml);
+        return (T) createUnmarshaller().unmarshal(reader);
     }
 
     /**
      * 创建Marshaller, 设定encoding(可为Null). 
      */
-    public Marshaller createMarshaller(String encoding) {
-        try {
+    public Marshaller createMarshaller(String encoding)throws JAXBException {
+        Marshaller marshaller = jaxbContext.createMarshaller();
+        marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
+        if (StringUtils.isNotBlank(encoding)) {
+            marshaller.setProperty(Marshaller.JAXB_ENCODING, encoding);
+        }
+        return marshaller;
+    }
+
+    public Marshaller createMarshallerAddHead(String encoding)throws JAXBException {
             Marshaller marshaller = jaxbContext.createMarshaller();
-
             marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
-
+            marshaller.setProperty(Marshaller.JAXB_FRAGMENT,true);
             if (StringUtils.isNotBlank(encoding)) {
                 marshaller.setProperty(Marshaller.JAXB_ENCODING, encoding);
             }
             return marshaller;
-        } catch (JAXBException e) {
-            throw new RuntimeException(e);
-        }
     }
 
     /**
      * 创建UnMarshaller. 
      */
-    public Unmarshaller createUnmarshaller() {
-        try {
-            return jaxbContext.createUnmarshaller();
-        } catch (JAXBException e) {
-            throw new RuntimeException(e);
-        }
+    public Unmarshaller createUnmarshaller() throws JAXBException{
+        return jaxbContext.createUnmarshaller();
     }
 
     /**
@@ -138,19 +130,15 @@ public class JaxbUtil {
         protected Collection collection;
     }
 
-    public static String convertToXml(Object obj, String encoding) {
+    public static String convertToXml(Object obj, String encoding)throws JAXBException {
         String result = null;
-        try {
-            JAXBContext context = JAXBContext.newInstance(obj.getClass());
-            Marshaller marshaller = context.createMarshaller();
-            marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
-            marshaller.setProperty(Marshaller.JAXB_ENCODING, encoding);
-            StringWriter writer = new StringWriter();
-            marshaller.marshal(obj, writer);
-            result = writer.toString();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        JAXBContext context = JAXBContext.newInstance(obj.getClass());
+        Marshaller marshaller = context.createMarshaller();
+        marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
+        marshaller.setProperty(Marshaller.JAXB_ENCODING, encoding);
+        StringWriter writer = new StringWriter();
+        marshaller.marshal(obj, writer);
+        result = writer.toString();
         return result;
     }
 }  

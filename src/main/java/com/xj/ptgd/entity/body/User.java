@@ -2,8 +2,6 @@ package com.xj.ptgd.entity.body;
 
 import com.xj.ptgd.entity.base.BaseDto;
 
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
 
 /**
   * User 

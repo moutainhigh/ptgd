@@ -79,4 +79,13 @@ public class MacUtil {
         }
     }
 
+    public static String subXMLForMAC(String MacAndXMl){
+        String xml = null;
+        //去头和尾，头是报文长度，尾是MAC
+        MacAndXMl=MacAndXMl.substring( 0, MacAndXMl.length() - 16 );
+        //如果没有头，则不需要
+        xml=MacAndXMl.substring( 6, MacAndXMl.length());
+        return xml;
+    }
+
 }

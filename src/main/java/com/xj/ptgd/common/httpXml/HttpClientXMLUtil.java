@@ -2,6 +2,7 @@ package com.xj.ptgd.common.httpXml;
 
 
 import com.xj.ptgd.common.logs.LogUtils;
+import com.xj.ptgd.entity.in.TestXMLIn;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpStatus;
 import org.apache.commons.httpclient.methods.PostMethod;
@@ -14,14 +15,30 @@ import java.net.URLConnection;
 
 public class HttpClientXMLUtil {
     private static Logger log = LogUtils.getHttpXMLLogger();
-    /**
+   /* *//**
      * @param args
-     */
+     *//*
     public static void main(String[] args) {
-        String url = "http://192.168.0.68/integration/xml";
+        String url = "http://192.168.99.19:8080/user/post";
+
         HttpClientXMLUtil tmi = new HttpClientXMLUtil();
-        log.info(tmi.post(url,"listSummaryMeeting.xml"));
-    }
+        String resXML="000313<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>" +
+                "<out>" +
+                "   <Head>" +
+                "       <version>1.0.1</version>" +
+                "       <InstId>000000000000000</InstId>" +
+                "       <AnsTranCode>Error</AnsTranCode>" +
+                "       <TrmSeqNum>00711497180212094224</TrmSeqNum>" +
+                "   </Head>" +
+                "   <tout>" +
+                "       <errorCode>DEF0002</errorCode>" +
+                "       <errorMessage></errorMessage>" +
+                "       <errorDetail></errorDetail>" +
+                "   </tout>" +
+                "</out>32E5677A7BF5B546";
+
+        System.out.println(tmi.post(url,resXML));
+    }*/
 
 
 
@@ -30,7 +47,7 @@ public class HttpClientXMLUtil {
      * @param url xml请求数据地址 xml String 发送的xml数据流
      * @return null发送失败，否则返回响应内容
      */
-    public String post(String url,String xmlFileName){
+    public String post(String url,String xml){
         //关闭
         System.setProperty("org.apache.commons.logging.Log", "org.apache.commons.logging.impl.SimpleLog");
         System.setProperty("org.apache.commons.logging.simplelog.showdatetime", "true");
@@ -50,9 +67,7 @@ public class HttpClientXMLUtil {
 
             //设置请求体，即xml文本内容，注：这里写了两种方式，一种是直接获取xml内容字符串，一种是读取xml文件以流的形式
 //          myPost.setRequestBody(xmlString);
-
-            InputStream body=this.getClass().getResourceAsStream("/"+xmlFileName);
-            myPost.setRequestBody(body);
+            myPost.setRequestBody(xml);
 //            myPost.setRequestEntity(new StringRequestEntity(xmlString,"text/xml","utf-8"));
             int statusCode = client.executeMethod(myPost);
             if(statusCode == HttpStatus.SC_OK){
@@ -105,7 +120,6 @@ public class HttpClientXMLUtil {
             e.printStackTrace();
         }
     }
-
     private String getXmlInfo() {
         StringBuilder sb = new StringBuilder();
         sb.append("<?xml version='1.0' encoding='UTF-8'?>");
@@ -122,7 +136,26 @@ public class HttpClientXMLUtil {
         sb.append("     <confKey>43283344</confKey>");
         sb.append(" </body>");
         sb.append("</Message>");
+        TestXMLIn in = new TestXMLIn();
 
-        return sb.toString();
+        String reqXML="<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>" +
+                "<In>" +
+                "	<Head>" +
+                "		<Version>1.0.1</Version>" +
+                "		<InstId>BJCEB</InstId>" +
+                "		<InstID>BJCEB</InstID>" +
+                "		<AnsTranCode>BJCEBQBIReq</AnsTranCode>" +
+                "		<TrmSeqNum>00711497180212094224</TrmSeqNum>" +
+                "	</Head>" +
+                "	<Body>" +
+                "	<billKey>finance|160396371336101889</billKey>" +
+                "	<companyId>020001792</companyId>" +
+                "	<beginNum>1</beginNum>" +
+                "	<queryNum>1</queryNum>" +
+                "	</Body>" +
+                "</In>";
+//        return sb.toString();
+        return reqXML;
     }
+
 }

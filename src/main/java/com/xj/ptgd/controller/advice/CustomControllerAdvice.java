@@ -1,9 +1,10 @@
 package com.xj.ptgd.controller.advice;
 
-import com.xj.ptgd.common.exception.CustomException;
-import com.xj.ptgd.common.exception.DataNullException;
-import com.xj.ptgd.common.result.Result;
+import com.xj.ptgd.common.result.ResultEnum;
 import com.xj.ptgd.common.result.ResultUtil;
+import com.xj.ptgd.entity.body.Error;
+import com.xj.ptgd.entity.out.ErrorXMLOut;
+import com.xj.ptgd.entity.base.XMLHeadDto;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
@@ -38,16 +39,19 @@ public class CustomControllerAdvice {
       */
      @ResponseBody
      @ExceptionHandler(value = Exception.class)
-     public Result errorHandler(Exception ex) {
-         if (ex instanceof CustomException) {
-             CustomException customException = (CustomException) ex;
-             if(ex instanceof DataNullException){
-                 return ResultUtil.success(null,null);
-             }else{
-                 return ResultUtil.success(null,null);
-             }
-         }else {
-             return ResultUtil.success(null,null);
+     public String errorHandler(Exception ex) {
+         ErrorXMLOut errorXMLOut = new ErrorXMLOut();
+         XMLHeadDto headDto = new XMLHeadDto();
+         Error error = new Error();
+         error.setErrorCode(ResultEnum.http_status_internal_server_error.getCode());
+         error.setErrorInfo(ResultEnum.http_status_internal_server_error.getMsg());
+         errorXMLOut.setHead(headDto);
+         ex.printStackTrace();
+         if (ex instanceof RuntimeException) {
+
+             return ResultUtil.getResult(errorXMLOut,ErrorXMLOut.class);
+         }else{
+             return ResultUtil.getResult(errorXMLOut,ErrorXMLOut.class);
          }
      }
 }

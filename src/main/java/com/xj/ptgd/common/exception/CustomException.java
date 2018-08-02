@@ -1,6 +1,5 @@
 package com.xj.ptgd.common.exception;
 
-import com.xj.ptgd.common.result.ResultEnum;
 
  /**
   * CustomException
@@ -9,11 +8,6 @@ import com.xj.ptgd.common.result.ResultEnum;
   */
 public class CustomException extends RuntimeException{
     private Integer code;
-
-    public CustomException(ResultEnum resultEnum) {
-        super(resultEnum.getMsg());
-        this.code = resultEnum.getCode();
-    }
 
     public Integer getCode() {
         return code;
