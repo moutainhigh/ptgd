@@ -8,6 +8,7 @@ import com.xj.ptgd.entity.base.XMLHeadDto;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MaxUploadSizeExceededException;
 
 /**
   * CustomControllerAdvice Controller自定义处理
@@ -50,6 +51,9 @@ public class CustomControllerAdvice {
          if (ex instanceof RuntimeException) {
 
              return ResultUtil.getResult(errorXMLOut,ErrorXMLOut.class);
+         }else if (ex instanceof MaxUploadSizeExceededException){//超出文件上传限定处理
+
+             return null;
          }else{
              return ResultUtil.getResult(errorXMLOut,ErrorXMLOut.class);
          }
