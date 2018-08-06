@@ -1,5 +1,6 @@
 package com.xj.ptgd.controller;
 
+import com.xj.ptgd.common.config.YmlConfig;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -14,7 +15,7 @@ import java.io.*;
 import java.util.List;
 
 @Controller
-public class FileUploadController {
+public class FileHandleController {
 
     /**
      * 实现文件上传
@@ -29,8 +30,7 @@ public class FileUploadController {
         int size = (int) file.getSize();
         System.out.println(fileName + "-->" + size);
 
-        String path = "D:/file" ;
-        File dest = new File(path + "/" + fileName);
+        File dest = new File(YmlConfig.UP_FILE_PATH + "/" + fileName);
         if(!dest.getParentFile().exists()){ //判断文件父目录是否存在
             dest.getParentFile().mkdir();
         }
@@ -61,9 +61,6 @@ public class FileUploadController {
         if(files.isEmpty()){
             return "上传文件为空";
         }
-
-        String path = "D:/file" ;
-
         for(MultipartFile file:files){
             String fileName = file.getOriginalFilename();
             int size = (int) file.getSize();
@@ -72,7 +69,7 @@ public class FileUploadController {
             if(file.isEmpty()){
                 return "false";
             }else{
-                File dest = new File(path + "/" + fileName);
+                File dest = new File(YmlConfig.UP_FILE_PATH + "/" + fileName);
                 if(!dest.getParentFile().exists()){ //判断文件父目录是否存在
                     dest.getParentFile().mkdir();
                 }
@@ -100,8 +97,8 @@ public class FileUploadController {
         OutputStream os = null;
         try {
             os = res.getOutputStream();
-            bis = new BufferedInputStream(new FileInputStream(new File("d://file/"
-                    + fileName)));
+            bis = new BufferedInputStream(new FileInputStream(new File(YmlConfig.DOWNLOAD_FILE_PATH
+                    + "/" + fileName)));
             int i = bis.read(buff);
             while (i != -1) {
                 os.write(buff, 0, buff.length);
