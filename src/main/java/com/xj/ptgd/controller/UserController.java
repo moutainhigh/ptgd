@@ -38,6 +38,7 @@ public class UserController {
         try{
             JaxbUtil ju =new JaxbUtil(KeyDto.class);
             KeyDto country = ju.fromXml(xml);
+            logInfo.info("keyDto:",country.toString());
         }catch (JAXBException e){
             e.printStackTrace();
             logError.error("注:(大小写敏感)请核对实体属性与xml标签\n" +
@@ -47,12 +48,12 @@ public class UserController {
         return xml;
     }
 
-    @RequestMapping(value = "/userAll", method = RequestMethod.GET ,produces = MediaType.TEXT_XML_VALUE)
+    @RequestMapping(value = "/userAll", method = RequestMethod.GET ,produces = {MediaType.TEXT_XML_VALUE})
     public String findUsers() {
         logInfo.info("\n开始发送请求");
         String retPost=userService.sendPost();
         logInfo.info("\n请求结束\nretPost: "+retPost);
-        return MacUtil.addMac(userService.findUsers());
+        return retPost;
     }
 
 }

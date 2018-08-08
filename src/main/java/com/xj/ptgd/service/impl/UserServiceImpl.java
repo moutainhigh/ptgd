@@ -50,7 +50,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public String sendPost() {
-        String url = "http://192.168.99.19:8080/user/post";
+        String url = "http://192.168.99.17:8080/user/post";
         HttpClientXMLUtil tmi = new HttpClientXMLUtil();
         String resXML="000313<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>" +
                 "<out>" +
@@ -61,7 +61,7 @@ public class UserServiceImpl implements UserService {
                 "       <TrmSeqNum>00711497180212094224</TrmSeqNum>" +
                 "   </Head>" +
                 "   <tout>" +
-                "       <errorCode>DEF0002</errorCode>" +
+                "       <errorCode>万科</errorCode>" +
                 "       <errorMessage></errorMessage>" +
                 "       <errorDetail></errorDetail>" +
                 "   </tout>" +

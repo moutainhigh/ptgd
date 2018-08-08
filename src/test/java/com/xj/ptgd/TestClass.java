@@ -2,6 +2,7 @@ package com.xj.ptgd;
 
 import com.xj.ptgd.common.result.ResultUtil;
 import com.xj.ptgd.common.util.JaxbUtil;
+import com.xj.ptgd.common.util.Transcoding;
 import com.xj.ptgd.entity.base.XMLHeadDto;
 import com.xj.ptgd.entity.body.User;
 import com.xj.ptgd.entity.in.TestXMLIn;
@@ -96,5 +97,64 @@ public class TestClass{
 		JaxbUtil ju =new JaxbUtil(TestXMLIn.class);
 		TestXMLIn country = ju.fromXml(reqXML);
 		System.out.println(country);
+	}
+
+
+	@Test
+	public void zm()throws Exception {
+		String str = "万科";
+		String gbk = new String(str.getBytes("GBK"),"GBK");
+		Transcoding.StringForTranscodingType(gbk);
+		String iso = new String(str.getBytes("ISO-8859-1"), "ISO-8859-1");
+		Transcoding.StringForTranscodingType(iso);
+
+		String t = "这是一个字符串aaa111";
+		String utf8 = new String(t.getBytes( "UTF-8"));
+		System.out.println(utf8);
+		String unicode = new String(utf8.getBytes(),"UTF-8");
+		System.out.println(unicode);
+		String gbk2 = new String(unicode.getBytes("GBK"));
+
+		System.out.println(gbk2);
+		pr(gbk);
+	}
+
+	public static void pr(String str){
+		System.out.println(getEncoding(str));
+	}
+	public static String getEncoding(String str) {
+		String encode = "GB2312";
+		try {
+			if (str.equals(new String(str.getBytes(encode), encode))) {
+				String s = encode;
+				return s;
+			}
+		} catch (Exception exception) {
+		}
+		encode = "ISO-8859-1";
+		try {
+			if (str.equals(new String(str.getBytes(encode), encode))) {
+				String s1 = encode;
+				return s1;
+			}
+		} catch (Exception exception1) {
+		}
+		encode = "UTF-8";
+		try {
+			if (str.equals(new String(str.getBytes(encode), encode))) {
+				String s2 = encode;
+				return s2;
+			}
+		} catch (Exception exception2) {
+		}
+		encode = "GBK";
+		try {
+			if (str.equals(new String(str.getBytes(encode), encode))) {
+				String s3 = encode;
+				return s3;
+			}
+		} catch (Exception exception3) {
+		}
+		return "";
 	}
 }

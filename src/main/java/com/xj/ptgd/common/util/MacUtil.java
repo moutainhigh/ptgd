@@ -88,4 +88,15 @@ public class MacUtil {
         return xml;
     }
 
+    public static String subXMLForMAC(String MacAndXMl,Boolean flag){
+        String xml = subXMLForHead(MacAndXMl);
+        if(flag) xml = subXMLForHead(xml);
+        return xml;
+    }
+    public static String subXMLForHead(String XMl){
+        String xml = null;
+        xml=XMl.replace( "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>", "");
+        return xml;
+    }
+
 }
